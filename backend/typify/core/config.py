@@ -45,7 +45,7 @@ class ProductionSettings(Settings):
     DEBUG: bool = False
     HOST: str = "0.0.0.0"
     PORT: int = 10000
-    WORKERS: int = 4
+    WORKERS: int = 1
     BACKEND_CORS_ORIGINS: List[str] = ["https://typify.onrender.com", "*"]
     DATABASE_URI: str = "postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}".format(
         DB_USER=os.getenv("DB_USER"),

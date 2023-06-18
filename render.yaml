@@ -6,7 +6,7 @@ services:
     region: frankfurt
     plan: free
     buildCommand: pip install --upgrade poetry; poetry install; typify db upgrade; typify import ingredients ingredients.csv; typify import labels labels.csv
-    startCommand: gunicorn catr.main:app --workers 1 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:10000
+    startCommand: typify serve
     envVars:
       - key: PYTHON_VERSION
         value: "3.10.11"
