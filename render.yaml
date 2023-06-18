@@ -1,0 +1,56 @@
+services:
+  - type: web
+    name: typify-api
+    env: python
+    rootDir: ./backend
+    region: frankfurt
+    plan: free
+    buildCommand: pip install --upgrade poetry; poetry install; typify db upgrade; typify import ingredients ingredients.csv; typify import labels labels.csv
+    startCommand: gunicorn catr.main:app --workers 1 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:10000
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.10.11"
+      - key: APP_ENVIRONMENT
+        value: "production"
+      - key: TF_ENABLE_ONEDNN_OPTS
+        value: 1
+      - key: CORS_ORIGINS
+        value: "https://typify.onrender.com"
+      - key: DB_HOST
+        fromDatabase:
+          name: typify-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: typify-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: typify-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: typify-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: typify-db
+          property: password
+    autoDeploy: true
+
+  - type: web
+    name: typify
+    env: static
+    rootDir: ./frontend
+    buildCommand: npm run build
+    staticPublishPath: ./build
+    envVars:
+      - key: VITE_API_URL
+        value: "https://typify-api.onrender.com"
+      - key: NODE_VERSION
+        value: "19.8.1"
+
+databases:
+  - name: typify-db
+    plan: free
+    region: frankfurt
