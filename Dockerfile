@@ -6,4 +6,4 @@ COPY ./backend /app
 WORKDIR /app
 RUN poetry install
 EXPOSE 5000
-CMD poetry run catr serve
+CMD poetry run typify serve

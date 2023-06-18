@@ -36,13 +36,18 @@ export const Classify = () => {
     }
 
     if (nextStatus.isSuccess) {
-      //acTrigger(nextStatus.data?.name);
+      acTrigger(nextStatus.data?.name);
 
       if (nextStatus.data?.confidence >= 60) {
         setValue("ingredientName", nextStatus.data?.suggestion);
+        acTrigger(nextStatus.data?.suggestion);
+
 
         //console.log(nextStatus.data);
+      } else {
+        acTrigger(nextStatus.data?.name);
       }
+
 
     }
   }
