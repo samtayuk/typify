@@ -9,7 +9,7 @@ import { useLazyAutocompleteIngredientsQuery } from "./ingredientsSlice";
 
 import { Autocomplete } from "../../ui/Autocomplete";
 
-export const ClassifyItem = ({ number }) => {
+export const ClassifyItem = ({ number, predictOnly=true }) => {
   const navigate = useNavigate();
   const toast = useToast();
   const { handleSubmit, control, formState: { errors }, reset, setValue, setFocus } = useForm();
@@ -46,7 +46,11 @@ export const ClassifyItem = ({ number }) => {
 
         //console.log(nextStatus.data);
       } else {
-        acTrigger(nextStatus.data?.name);
+        if (predictOnly) {
+          getNextItem();
+        } else {
+          acTrigger(nextStatus.data?.name);
+        }
       }
 
 
