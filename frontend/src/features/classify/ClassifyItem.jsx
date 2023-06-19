@@ -1,15 +1,11 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { CheckIcon, ArrowPathIcon } from "@heroicons/react/24/outline";
 import { useToast } from "../toast/toastSlice";
 
-import { useGetNextQuery, useUpdateMutation, useLazyGetNextQuery } from "./rawIngredientsSlice";
+import { useUpdateMutation, useLazyGetNextQuery } from "./rawIngredientsSlice";
 import { useLazyAutocompleteIngredientsQuery } from "./ingredientsSlice";
-
-import { Header } from "../../ui/Header";
-import { Modal } from "../../ui/Modal";
-import { Card } from "../../ui/Card";
 
 import { Autocomplete } from "../../ui/Autocomplete";
 
@@ -25,6 +21,7 @@ export const ClassifyItem = ({ number }) => {
   let id = null;
 
   const getNextItem = () => {
+    setValue("ingredientName", "");
     nextTrigger({ number: number });
   };
 
@@ -74,12 +71,15 @@ export const ClassifyItem = ({ number }) => {
 
   return (
     <div className=" bg-neutral-700 p-4 rounded-lg w-full">
-      <h1 className="text-lg md:text-4xl text-white mb-3 text-center font-['Tsukimi_Rounded']">
+      <h1 className="text-lg md:text-4xl text-white mb-4 text-center font-['Tsukimi_Rounded'] truncate">
         {nextStatus.isLoading || nextStatus.isFetching || !nextStatus.isSuccess ? "Loading..." : nextStatus.data?.name}
       </h1>
       <form onSubmit={(e) => e.preventDefault()}>
 
         <div className="join w-full">
+            <button className="btn join-item" onClick={() => { getNextItem() }}>
+              <ArrowPathIcon className="w-5 h-5" />
+            </button>
             <Controller
               control={control}
               name="ingredientName"
@@ -102,12 +102,12 @@ export const ClassifyItem = ({ number }) => {
                 />
               )}
             />
-            <button className="btn join-item" disabled={nextStatus.data?.confidence < 60} onClick={() => {
+            <button className="btn btn-secondary join-item" disabled={nextStatus.data?.confidence < 60} onClick={() => {
               handleSubmit((d) => {
                 update({id: nextStatus.data?.id, ingredientName: d.ingredientName.toLowerCase()})
                 setValue("ingredientName", "");
               })()}}>
-                Yes
+                <CheckIcon className="w-5 h-5" />
               </button>
           </div>
       </form>

@@ -1,19 +1,4 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useForm, Controller } from "react-hook-form";
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import { useToast } from "../toast/toastSlice";
-
-import { useGetNextQuery, useUpdateMutation, useLazyGetNextQuery } from "./rawIngredientsSlice";
-import { useLazyAutocompleteIngredientsQuery } from "./ingredientsSlice";
-
 import { ClassifyItem } from "./ClassifyItem";
-
-import { Header } from "../../ui/Header";
-import { Modal } from "../../ui/Modal";
-import { Card } from "../../ui/Card";
-
-import { Autocomplete } from "../../ui/Autocomplete";
 
 export const Classify = () => {
   return (
