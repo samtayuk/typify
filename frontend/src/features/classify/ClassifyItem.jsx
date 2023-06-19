@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-import { CheckIcon, ArrowPathIcon } from "@heroicons/react/24/outline";
+import { CheckIcon, ArrowPathIcon, NoSymbolIcon } from "@heroicons/react/24/outline";
 import { useToast } from "../toast/toastSlice";
 
 import { useUpdateMutation, useLazyGetNextQuery } from "./rawIngredientsSlice";
@@ -82,7 +82,7 @@ export const ClassifyItem = ({ number, predictOnly=true }) => {
 
         <div className="join w-full">
             <button className="btn join-item" onClick={() => { getNextItem() }} disabled={nextStatus.isLoading || nextStatus.isFetching || !nextStatus.isSuccess}>
-              <ArrowPathIcon className="w-5 h-5" />
+              <NoSymbolIcon className="w-5 h-5" />
             </button>
             <Controller
               control={control}
