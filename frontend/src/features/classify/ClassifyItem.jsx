@@ -81,7 +81,7 @@ export const ClassifyItem = ({ number, predictOnly=true }) => {
       <form onSubmit={(e) => e.preventDefault()}>
 
         <div className="join w-full">
-            <button className="btn join-item" onClick={() => { getNextItem() }}>
+            <button className="btn join-item" onClick={() => { getNextItem() }} disabled={nextStatus.isLoading || nextStatus.isFetching || !nextStatus.isSuccess}>
               <ArrowPathIcon className="w-5 h-5" />
             </button>
             <Controller
@@ -106,7 +106,7 @@ export const ClassifyItem = ({ number, predictOnly=true }) => {
                 />
               )}
             />
-            <button className="btn btn-secondary join-item" disabled={nextStatus.data?.confidence < 60} onClick={() => {
+            <button className="btn btn-secondary join-item" disabled={((nextStatus.data?.confidence < 60) || nextStatus.isLoading || nextStatus.isFetching || !nextStatus.isSuccess)} onClick={() => {
               handleSubmit((d) => {
                 update({id: nextStatus.data?.id, ingredientName: d.ingredientName.toLowerCase()})
                 setValue("ingredientName", "");
