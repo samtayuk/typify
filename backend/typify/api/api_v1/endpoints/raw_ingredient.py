@@ -15,12 +15,17 @@ router = APIRouter()
 async def raw_ingredients_next(db: AsyncSession = Depends(get_db), ingredient_classifier = Depends(get_IClassifier)):
     raw_ingredient = (await db.execute(RawIngredientModel.select().where(
         RawIngredientModel.ingredient_id == None).limit(250).order_by(func.random()))).scalars().first()
+
+    amount_left = (await db.execute(select(func.count(RawIngredientModel.id)).select_from(RawIngredientModel).where(RawIngredientModel.ingredient_id == None))).scalars().first()
+    print(amount_left)
+
     prediction = ingredient_classifier.predict([raw_ingredient.name])
 
     return {
         **raw_ingredient.__dict__,
         "suggestion": prediction[0][0].decode("utf-8"),
         "confidence": f"{prediction[1][0] * 100:.2f}",
+        "amount_left": amount_left,
     }
 
 

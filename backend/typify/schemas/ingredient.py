@@ -19,6 +19,7 @@ class RawIngredientSchemaSuggest(RawIngredientSchemaBase):
     id: str
     suggestion: str
     confidence: float
+    amount_left: int
 
 
 class RawIngredientSchemaUpdate(BaseModel):

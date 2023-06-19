@@ -11,7 +11,7 @@ export const Autocomplete = ({ items, value, onChange, onItemSelect, ref=null, d
     >
       <input
         type="text"
-        className="input input-bordered w-full"
+        className="input w-full join-item"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Type something.."
@@ -20,7 +20,7 @@ export const Autocomplete = ({ items, value, onChange, onItemSelect, ref=null, d
       />
         <ul
           className={classNames({
-            "dropdown-content bg-base-200 top-14 max-h-96 overflow-auto flex-col rounded-md menu menu-compact": true,
+            "dropdown-content bg-base-200 top-14 max-h-96 overflow-auto flex-col rounded-md menu menu-compact z-50": true,
             "hidden": (items.length === 0) && (value?.length < 3),
           })}
           // use ref to calculate the width of parent
